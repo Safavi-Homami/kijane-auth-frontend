@@ -1,0 +1,8 @@
+body {
+    font-family: sans-serif;
+  }
+  .card {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin: 1rem;
+  }
