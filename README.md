@@ -1,12 +1,24 @@
-# React + Vite
+# Kijane Auth Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dieses Repository enthält das moderne Frontend für das Authentifizierungs- und Kursverwaltungs-System **Kijane** (React + Vite + Tailwind + shadcn/ui).
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Multi-Step Registrierung mit E-Mail-Bestätigung und 2FA
+- Login, Passwort-Reset, 2FA, Rollenverwaltung (Admin, Trainer, Nutzer etc.)
+- Moderner Admin-Bereich und Dashboard
+- Responsive Design (Dark/Light Mode)
+- Integration mit Spring Boot Backend (siehe [kijane-auth-backend](https://github.com/Safavi-Homami/kijane-auth-backend))
 
-## Expanding the ESLint configuration
+## Quick Start
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# Repository klonen
+git clone https://github.com/Safavi-Homami/kijane-auth-frontend.git
+
+# Installiere alle Abhängigkeiten
+npm install
+
+# Starte die App (lokal)
+npm run dev
+git add README.md
