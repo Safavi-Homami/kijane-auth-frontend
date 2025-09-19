@@ -1,0 +1,80 @@
+.settings-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.settings-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #1f2937;
+}
+
+.settings-container p {
+  font-size: 1rem;
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+}
+
+.settings-form label,
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.settings-form input[type="text"],
+.settings-form input[type="email"],
+.settings-form select {
+  margin-top: 0.3rem;
+  padding: 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.settings-form input:focus,
+.settings-form select:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+.settings-form input[type="checkbox"] {
+  margin-top: 0.6rem;
+  transform: scale(1.2);
+}
+
+.toggle-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+}
+
+button[type="submit"],
+.settings-group button {
+  margin-top: 0.5rem;
+  background-color: #2563eb;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+button[type="submit"]:hover,
+.settings-group button:hover {
+  background-color: #1d4ed8;
+}

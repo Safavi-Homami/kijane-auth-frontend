@@ -1,0 +1,91 @@
+.navbar {
+  background-color: #282c34;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-list li {
+  display: inline;
+}
+
+.nav-list a, .logout-button {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.nav-list a:hover, .logout-button:hover {
+  text-decoration: underline;
+}
+/* Benutzername extra styling */
+.nav-user {
+  color: #ffffff;
+  font-weight: bold;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+/* für changepassword zusatz*/
+.change-password-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 24px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+}
+
+.change-password-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.change-password-container label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.change-password-container input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+
+.change-password-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.change-password-container button:hover {
+  background-color: #004a99;
+}
+
+.change-password-container p {
+  text-align: center;
+  font-weight: bold;
+}
+
+nav.topnav .left a {
+  margin-right: 12px;
+}

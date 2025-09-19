@@ -1,0 +1,70 @@
+/* src/styles/AdminLayout.css */
+
+.admin-layout {
+  display: flex;
+  height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.admin-sidebar {
+  width: 260px;
+  background-color: #383E42;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+}
+
+.sidebar-section {
+  margin-bottom: 2.5rem;  
+}
+
+.section-title {
+  background-color: darkslategrey;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-icon {
+  margin-right: 0.5rem;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  color: #d1d5db;
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  margin: 0.2rem 0;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-link .icon {
+  margin-right: 0.75rem;
+  width: 18px;
+  height: 18px;
+}
+
+.sidebar-link:hover {
+  background-color: #1f2937;
+  color: #fff;
+}
+
+.sidebar-link.active {
+  /*background-color: darkgrey;*/
+  color: white;
+}
+
+.admin-content {
+  flex: 1;
+  background-color: #f9fafb;
+  padding: 2rem;
+  overflow-y: auto;
+}

@@ -1,111 +1,91 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import { useUser } from "../context/useUser"; // named import
 
-export default function AddCourseForm() {
+export default function AddCourseForm({ authors }) {
+  const { user } = useUser();
+  const roles = user?.roles || [];
+  const isAuthorized = roles.includes("ADMIN") || roles.includes("TRAINER");
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [authorId, setAuthorId] = useState([]);
-  const [authors, setAuthors] = useState([]);
+  const [authorId, setAuthorId] = useState("");
 
   const navigate = useNavigate();
 
-  // Autoren für Auswahl laden
-  useEffect(() => {
-    axios.get("/api/authors")
-      .then(res => {
-        console.log("Full response:", res);
-        console.log("res.data:", res.data);
+  if (!isAuthorized) {
+    return (
+      <p style={{ color: "red", fontWeight: "bold" }}>
+        Du hast keine Berechtigung, Kurse anzulegen.
+      </p>
+    );
+  }
 
-        if (Array.isArray(res.data)) {
-          setAuthors(res.data);
-        } else {
-          console.error("res.data ist kein Array!", res.data);
-        }
-      })
-      .catch(err => console.error("Fehler beim Laden der Autoren", err));
-  }, []);
-  useEffect(() => {
-    if (authors.length > 0) {
-      console.log("Setze standardmßig Author:" , authors[0].id);
-      setAuthorId(authors[0].id);
-    }
-  }, [authors]); // 👈 dieser Effekt reagiert nur, wenn sich `authors` ändert
-  
-    // Formular zurücksetzen
-  const resetForm = () => {
-      setTitle("");
-      setDescription("");
-      setAuthorId(authors.length > 0 ? authors[0].id.toString() : "");
-  };
-  
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!authorId) {
+      alert("Bitte einen Autor auswählen.");
+      return;
+    }
 
-    const newCourse = {
+    const payload = {
       title,
       description,
-      authorIds: [parseInt(authorId)]
-
+      authorIds: [authorId], // Option A: Übergabe als Array mit einem Wert
     };
 
-    axios.post("/api/courses", newCourse)
-    .then(res => {
-      console.log("Kurs erfolgreich erstellt:", res.data);
-      resetForm();
-      navigate("/"); // Zurück zur Startseite oder Kursliste
-      })
-      .catch(err => {
-        console.error("Fehler beim Speichern des Kurses", err);
-        alert("❌ Fehler beim Speichern!");
-      });
+    try {
+      await api.post("/courses", payload);
+      navigate("/courses");
+    } catch (error) {
+      console.error("Fehler beim Speichern des Kurses:", error);
+    }
   };
 
   return (
-    <div className="card">
-      <h2>🟦 Neuen Kurs erstellen</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Titel:
-          <input
-            type="text"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-            placeholder="Kurstitel eingeben"
-            required
-          />
-        </label>
-        <br />
+  <div className="trainer-form-container">
 
-        <label>
-          Beschreibung:
-          <textarea
-            value={description}
-            onChange={e => setDescription(e.target.value)}
-            placeholder="Kurzbeschreibung des Kurses"
-            required
-          />
-        </label>
-        <br />
+    <form onSubmit={handleSubmit}>
+      <h2>Neuen Kurs anlegen</h2>
 
-        <label>
-          Autor:
-          <select value={authorId} onChange={e => setAuthorId(e.target.value)}>
-            {!Array.isArray(authors) ? (
-              <option>Autoren werden geladen...</option>
-            ) : (
-              authors.map(author => (
-                <option key={author.id} value={author.id}>
-                  {author.firstName} {author.lastName}
-                </option>
-              ))
-            )}
-          </select>
-        </label>
-        <br />
+      <label>Titel:</label>
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        required
+      />
 
-        <button type="submit">💾 Kurs speichern</button>
-      </form>
+      <label>Beschreibung:</label>
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        required
+      />
+
+      <label>Autor:</label>
+      <select
+        value={authorId}
+        onChange={(e) => setAuthorId(e.target.value)}
+        required
+      >
+        <option value="">Bitte auswählen</option>
+        {authors.map((author) => (
+          <option key={author.id} value={author.id}>
+            {author.firstName} {author.lastName}
+          </option>
+        ))}
+      </select>
+
+      <button type="submit">Kurs speichern</button>
+    </form>
     </div>
   );
 }
+
+AddCourseForm.propTypes = {
+  authors: PropTypes.array.isRequired,
+};
+
