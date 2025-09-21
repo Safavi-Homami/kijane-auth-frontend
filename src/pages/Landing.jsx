@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+
 // Logo als Inline-SVG-Komponente
 const KiyanLogo = () => (
   <svg
@@ -20,10 +21,18 @@ const KiyanLogo = () => (
       fontSize="74"
     >
       <tspan fill="black">clavi</tspan>
-      <tspan fill="white">simo</tspan>
+      <tspan fill="white" stroke="black" strokeWidth="2">simo</tspan>
     </text>
   </svg>
 );
+
+// Vorlesefunktion
+const speakText = (text) => {
+  const synth = window.speechSynthesis;
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "de-DE"; // deutsche Stimme
+  synth.speak(utterance);
+};
 
 export default function Landing() {
   return (
@@ -38,17 +47,34 @@ export default function Landing() {
         {/* Hero */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
-            Clavissimo –
+            Clavisimo –
             <span className="block text-orange-600">Education & Startup Tools</span>
           </h1>
           <p className="mt-4 text-slate-700 text-lg">
             Praxisnahe IT-Kurse ab November und moderne Authentifizierungs-Module
             für Startups. Zwei Bereiche, ein Ziel: Lernen. Anwenden. Durchstarten.
           </p>
+
+          {/* Vorlese-Button */}
+          <div className="mt-4">
+            <button
+              onClick={() =>
+                speakText("Willkommen bei Clavisimo – Education und Startup Tools")
+              }
+              className="px-4 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 transition"
+            >
+              🔊 Vorlesen
+            </button>
+          </div>
+
           <div className="flex gap-3 mt-6 justify-center flex-wrap">
+            {/* Registrieren deaktiviert im Demo-Modus */}
             <Button asChild className="whitespace-nowrap px-6">
-              <Link to="/register">Registrieren</Link>
+              <Link to="/demo-info">Registrieren</Link>
             </Button>
+
+
+            {/* Roadmap-Link bleibt aktiv */}
             <Button asChild variant="secondary" className="whitespace-nowrap px-6">
               <Link to="/courses">Mehr erfahren</Link>
             </Button>
@@ -82,10 +108,20 @@ export default function Landing() {
               <p className="text-sm text-slate-500">
                 Hinweis: Alle Angaben noch vorläufig. Konkrete Infos ab 15. Oktober.
               </p>
-              <div className="pt-2">
+              <div className="flex justify-between items-center pt-2">
                 <p className="text-sm">
                   📧 Fragen oder Interesse? <b>edu@clavissimo.com</b>
                 </p>
+                <button
+                  onClick={() =>
+                    speakText(
+                      "Clavissimo EDU – Ab November praxisorientierte Wochenend-Kurse. Java Backend Basics, Fortgeschrittenes Java und Spring Boot mit Security."
+                    )
+                  }
+                  className="px-3 py-1 rounded bg-orange-500 text-white text-sm hover:bg-orange-600"
+                >
+                  🔊 Vorlesen
+                </button>
               </div>
             </CardContent>
           </Card>
@@ -116,10 +152,20 @@ export default function Landing() {
               <p className="text-sm text-slate-500">
                 Hinweis: Weitere Details und Videos ab 1. November hier auf dieser Seite.
               </p>
-              <div className="pt-2">
+              <div className="flex justify-between items-center pt-2">
                 <p className="text-sm">
                   📧 Interesse geweckt? <b>info@clavissimo.com</b>
                 </p>
+                <button
+                  onClick={() =>
+                    speakText(
+                      "Startup Tools – ab sofort testbar. Benutzerverwaltung, Rollen, Login mit Zwei Faktor Authentifizierung, Passwort Reset und Admin Dashboard."
+                    )
+                  }
+                  className="px-3 py-1 rounded bg-orange-500 text-white text-sm hover:bg-orange-600"
+                >
+                  🔊 Vorlesen
+                </button>
               </div>
             </CardContent>
           </Card>

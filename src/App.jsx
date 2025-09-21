@@ -37,6 +37,8 @@ import SecuritySettings from "./pages/admin/settings/SecuritySettings";
 import ProfileSettings from "./pages/admin/settings/ProfileSettings";
 import NotificationSettings from "./pages/admin/settings/NotificationSettings";
 import Header from "./components/layout/Header";
+import DemoInfo from "./pages/DemoInfo";
+
 
 
 
@@ -77,6 +79,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<Landing />} />
+            <Route path="/demo-info" element={<DemoInfo />} />
             <Route path="/home" element={<Landing />} />
             <Route path="/courses" element={<CourseList />} />
 
