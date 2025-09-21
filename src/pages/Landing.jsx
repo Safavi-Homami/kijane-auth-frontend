@@ -2,20 +2,16 @@ import { Link } from "react-router-dom";
 import "./Landing.css"; // eigene CSS-Datei
 
 // Logo als Inline-SVG-Komponente
-// Logo als Inline-SVG-Komponente
 const KiyanLogo = () => (
   <svg
-    className="logo-anim"
-    viewBox="0 0 600 180"
+    className="logo"
+    viewBox="0 0 520 180"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <circle cx="90" cy="90" r="90" fill="#FF8900" />
-
-    {/* Gesamtes Wort Clavisimo animieren */}
     <text
-      className="logo-word"
-      x="20"
+      x="2"
       y="115"
       fontFamily="Georgia, serif"
       fontWeight="bold"
