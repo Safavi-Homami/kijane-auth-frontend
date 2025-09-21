@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-
 // Logo als Inline-SVG-Komponente
 const KiyanLogo = () => (
   <svg
@@ -26,15 +25,10 @@ const KiyanLogo = () => (
   </svg>
 );
 
-// Vorlesefunktion
-const speakText = (text) => {
-  const synth = window.speechSynthesis;
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "de-DE"; // deutsche Stimme
-  synth.speak(utterance);
-};
-
 export default function Landing() {
+  // Demo-Modus Flag (später evtl. ENV-Variable)
+  const demoMode = true;
+
   return (
     <div className="min-h-screen bg-neutral-100">
       <div className="w-full min-h-screen px-4 md:px-8 py-6">
@@ -55,24 +49,11 @@ export default function Landing() {
             für Startups. Zwei Bereiche, ein Ziel: Lernen. Anwenden. Durchstarten.
           </p>
 
-          {/* Vorlese-Button */}
-          <div className="mt-4">
-            <button
-              onClick={() =>
-                speakText("Willkommen bei Clavisimo – Education und Startup Tools")
-              }
-              className="px-4 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 transition"
-            >
-              🔊 Vorlesen
-            </button>
-          </div>
-
           <div className="flex gap-3 mt-6 justify-center flex-wrap">
-            {/* Registrieren deaktiviert im Demo-Modus */}
+            {/* Registrieren abhängig vom Demo-Modus */}
             <Button asChild className="whitespace-nowrap px-6">
-              <Link to="/demo-info">Registrieren</Link>
+              <Link to={demoMode ? "/demo-info" : "/register"}>Registrieren</Link>
             </Button>
-
 
             {/* Roadmap-Link bleibt aktiv */}
             <Button asChild variant="secondary" className="whitespace-nowrap px-6">
@@ -108,20 +89,10 @@ export default function Landing() {
               <p className="text-sm text-slate-500">
                 Hinweis: Alle Angaben noch vorläufig. Konkrete Infos ab 15. Oktober.
               </p>
-              <div className="flex justify-between items-center pt-2">
+              <div className="pt-2">
                 <p className="text-sm">
                   📧 Fragen oder Interesse? <b>edu@clavissimo.com</b>
                 </p>
-                <button
-                  onClick={() =>
-                    speakText(
-                      "Clavissimo EDU – Ab November praxisorientierte Wochenend-Kurse. Java Backend Basics, Fortgeschrittenes Java und Spring Boot mit Security."
-                    )
-                  }
-                  className="px-3 py-1 rounded bg-orange-500 text-white text-sm hover:bg-orange-600"
-                >
-                  🔊 Vorlesen
-                </button>
               </div>
             </CardContent>
           </Card>
@@ -152,20 +123,10 @@ export default function Landing() {
               <p className="text-sm text-slate-500">
                 Hinweis: Weitere Details und Videos ab 1. November hier auf dieser Seite.
               </p>
-              <div className="flex justify-between items-center pt-2">
+              <div className="pt-2">
                 <p className="text-sm">
                   📧 Interesse geweckt? <b>info@clavissimo.com</b>
                 </p>
-                <button
-                  onClick={() =>
-                    speakText(
-                      "Startup Tools – ab sofort testbar. Benutzerverwaltung, Rollen, Login mit Zwei Faktor Authentifizierung, Passwort Reset und Admin Dashboard."
-                    )
-                  }
-                  className="px-3 py-1 rounded bg-orange-500 text-white text-sm hover:bg-orange-600"
-                >
-                  🔊 Vorlesen
-                </button>
               </div>
             </CardContent>
           </Card>
