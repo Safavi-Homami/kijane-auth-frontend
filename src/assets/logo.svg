@@ -1,7 +1,7 @@
 <svg width="520" height="180" viewBox="0 0 520 180" fill="none" xmlns="http://www.w3.org/2000/svg">
   <circle cx="90" cy="90" r="90" fill="#FF8900"/>
   <text x="2" y="115" font-family="Georgia, serif" font-weight="bold" font-size="74">
-    <tspan fill="black">clavi</tspan><tspan fill="white">simo</tspan>
+    <tspan fill="black">clavi</tspan><tspan fill="#FF8900">simo</tspan>
   </text>
   <text x="155" y="155" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="33" fill="white" letter-spacing="2"></text>
 </svg>

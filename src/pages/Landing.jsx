@@ -1,151 +1,256 @@
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import "./Landing.css"; // eigene CSS-Datei
 
 // Logo als Inline-SVG-Komponente
+// Logo als Inline-SVG-Komponente
 const KiyanLogo = () => (
- <svg
-  className="w-[360px] h-auto md:w-[420px]"
-  viewBox="0 0 520 180"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-
+  <svg
+    className="logo-anim"
+    viewBox="0 0 600 180"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <circle cx="90" cy="90" r="90" fill="#FF8900" />
+
+    {/* Gesamtes Wort Clavisimo animieren */}
     <text
-      x="2"
+      className="logo-word"
+      x="20"
       y="115"
       fontFamily="Georgia, serif"
       fontWeight="bold"
       fontSize="74"
     >
       <tspan fill="black">clavi</tspan>
-      <tspan fill="white" stroke="black" strokeWidth="2">simo</tspan>
+      <tspan fill="#FF8900">simo</tspan>
     </text>
   </svg>
 );
 
 export default function Landing() {
-  // Demo-Modus Flag (später evtl. ENV-Variable)
-  const demoMode = true;
-
   return (
-    <div className="min-h-screen bg-neutral-100">
-      <div className="w-full min-h-screen px-4 md:px-8 py-6">
+    <div className="landing-container">
 
-        {/* Logo */}
-        <div className="flex justify-center mb-8">
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="logo-wrapper">
           <KiyanLogo />
         </div>
 
-        {/* Hero */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
-            Clavisimo –
-            <span className="block text-orange-600">Education & Startup Tools</span>
-          </h1>
-          <p className="mt-4 text-slate-700 text-lg">
-            Praxisnahe IT-Kurse ab November und moderne Authentifizierungs-Module
-            für Startups. Zwei Bereiche, ein Ziel: Lernen. Anwenden. Durchstarten.
-          </p>
+        <h1 className="hero-title">
+          Clavisimo – Security, Knowledge, Key to Success
+        </h1>
+        <p className="hero-subtitle">
+          Clavisimo steht für Sicherheit, Wissen und praxisnahe Weiterbildung.
+          Zwei Bereiche bilden das Fundament: praxisorientierte IT-Kurse und
+          moderne Authentifizierungs-Module für Startups.
+        </p>
 
-          <div className="flex gap-3 mt-6 justify-center flex-wrap">
-            {/* Registrieren abhängig vom Demo-Modus */}
-            <Button asChild className="whitespace-nowrap px-6">
-              <Link to={demoMode ? "/demo-info" : "/register"}>Registrieren</Link>
-            </Button>
+        <div className="card-grid">
+          {/* EDU Teaser */}
+          <div className="teaser-card edu-card">
+            <h2 className="card-title edu-title">Clavisimo EDU Port</h2>
+            <p className="card-text">
+              Zugang zu praxisnahen IT-Kursen von Herrn Hossein Safavi-Homami.
+              Genauere Planungen zu Terminen und Kosten werden ab Oktober
+              veröffentlicht.
+            </p>
+            <div className="card-link">
+              {/* Link angepasst auf edu-more */}
+              <a href="#edu-more">More about EDU →</a>
+            </div>
+          </div>
 
-            {/* Roadmap-Link bleibt aktiv */}
-            <Button asChild variant="secondary" className="whitespace-nowrap px-6">
-              <Link to="/courses">Mehr erfahren</Link>
-            </Button>
+          {/* AUTH Teaser */}
+          <div className="teaser-card auth-card">
+            <h2 className="card-title auth-title">Clavisimo AUTH Start</h2>
+            <p className="card-text">
+              Authentication & Authorization for Startups – sichere Logins,
+              Zwei-Faktor-Authentifizierung und Rollenverwaltung leicht
+              integriert.
+            </p>
+            <div className="card-link">
+              {/* Link angepasst auf auth-more */}
+              <a href="#auth-more">More about AUTH →</a>
+            </div>
           </div>
         </div>
 
-        {/* Zwei Hauptbereiche */}
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="hero-buttons">
+          {/* Registrieren-Button bleibt im Demo-Modus blockiert */}
+          <Link to="/demo-info" className="btn btn-orange">
+            Registrieren
+          </Link>
+          <Link to="#videos" className="btn btn-gray">
+            Demo Videos
+          </Link>
+        </div>
+      </section>
 
-          {/* EDU-Bereich */}
-          <Card className="rounded-2xl shadow-md">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold text-orange-600">
-                🎓 Clavissimo EDU
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-slate-700">
-              <p>
-                Ab <b>November 2025</b> starten unsere ersten praxisorientierten Wochenend-Kurse. 
-                Ab dem <b>15. Oktober</b> finden Sie hier alle Details zu Terminen, Orten und Kosten.
-              </p>
-              <ul className="list-disc list-inside space-y-1">
-                <li>Java Backend Basics</li>
-                <li>Fortgeschrittenes Java</li>
-                <li>Spring Boot / JPA / Auth / Security</li>
-              </ul>
-              <p>
-                Vorteile: Lernen mit realistischen Projekten, 
-                aktuelle Technologien & praxisnaher Wissenstransfer.
-              </p>
-              <p className="text-sm text-slate-500">
-                Hinweis: Alle Angaben noch vorläufig. Konkrete Infos ab 15. Oktober.
-              </p>
-              <div className="pt-2">
-                <p className="text-sm">
-                  📧 Fragen oder Interesse? <b>edu@clavissimo.com</b>
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+      {/* EDU Detail Section */}
+      <section id="edu" className="detail-section edu-detail">
+        <h2 className="detail-title edu-title">Clavisimo EDU Port</h2>
+        <p className="detail-text">
+          Unter <b>Kurse</b> finden Sie ab November 2025 praxisnahe IT-Seminare von
+          Herrn <b>Hossein Safavi-Homami</b>. Die genauen Planungen zu Terminen, Umfang
+          und Kosten werden noch veröffentlicht. Der Fokus liegt auf realistischen
+          Projektbeispielen und sofort anwendbarem Wissen.
+        </p>
 
-          {/* Startup-Tools */}
-          <Card className="rounded-2xl shadow-md">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold text-orange-600">
-                🚀 Startup Tools
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-slate-700">
-              <p>
-                Startups können ab sofort unsere <b>leicht erweiterbaren Tools</b> testen. 
-                Ab <b>1. November</b> folgen hier weitere Infos und kurze Demo-Videos.
-              </p>
-              <ul className="list-disc list-inside space-y-1">
-                <li>Benutzerverwaltung & Rollen</li>
-                <li>Login mit JWT & Zwei-Faktor-Auth</li>
-                <li>Passwort-Reset & E-Mail-Verifizierung</li>
-                <li>Admin-Dashboard für User-Management</li>
-              </ul>
-              <div className="bg-neutral-50 rounded-lg p-3 text-sm shadow-sm">
-                <p className="font-semibold mb-2">🔑 Demo-Zugang:</p>
-                <p>Student → fred.student@example.com / Demo123#</p>
-                <p>Trainer → sebastian.trainer@example.com / Demo123#</p>
-              </div>
-              <p className="text-sm text-slate-500">
-                Hinweis: Weitere Details und Videos ab 1. November hier auf dieser Seite.
-              </p>
-              <div className="pt-2">
-                <p className="text-sm">
-                  📧 Interesse geweckt? <b>info@clavissimo.com</b>
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Quick actions */}
+        <div className="btn-row">
+          <Link to="/courses" className="btn btn-orange">See Courses</Link>
+          <a href="#edu-more" className="btn btn-gray">More about EDU</a>
+        </div>
+      </section>
+
+      {/* EDU – More (dynamic section) */}
+      <section id="edu-more" className="detail-section edu-more">
+        <div className="info-grid">
+          {/* Differentiator */}
+          <div className="info-card edu-card">
+            <h3 className="info-title">EDU Highlights</h3>
+            <ul className="bullet">
+              <li><b>Praxis statt Folien:</b> Live-Coding an einem realistischen Mini-Projekt.</li>
+              <li><b>Klarer Tech-Stack:</b> Java & Spring Boot mit modernen Patterns.</li>
+              <li><b>Transfer in den Job:</b> Aufgaben, die in echten Projekten vorkommen.</li>
+              <li><b>Kleine Gruppen:</b> Raum für Fragen, Code-Reviews & individuelle Tipps.</li>
+            </ul>
+          </div>
+
+          {/* Topics (selection) */}
+          <div className="info-card edu-card">
+            <h3 className="info-title">Course Topics (Selection)</h3>
+            <div className="tags">
+              <span>Java Basics → REST</span>
+              <span>Spring Boot Layers</span>
+              <span>JPA / Hibernate</span>
+              <span>Validation</span>
+              <span>DTO & Mapping</span>
+              <span>JWT Security</span>
+              <span>2FA Basics</span>
+              <span>Error Handling</span>
+              <span>Testing (Unit/API)</span>
+            </div>
+            <p className="note">
+              Hinweis: Dies ist eine Auswahl. Inhalte werden im Kurs gemeinsam priorisiert.
+            </p>
+          </div>
+
+          {/* Participant input */}
+          <div className="info-card edu-card">
+            <h3 className="info-title">Participant Input</h3>
+            <p>
+              Teilnehmende können gewünschte Schwerpunkte (z. B. mehr Zeit für JPA,
+              Security oder Testing) vorschlagen. Bitte senden Sie Ihre Wünsche
+              <b> spätestens 1 Monat vor Kursbeginn</b> an <b>edu@clavisimo.com</b>.
+              Die Vorschläge sind <b>unverbindlich für beide Seiten</b>; wir bemühen
+              uns um eine faire Gewichtung im Kurs.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* AUTH Detail Section */}
+      <section id="auth" className="detail-section auth-detail">
+        <h2 className="detail-title auth-title">Clavisimo AUTH Start</h2>
+        <p className="detail-text">
+          Clavisimo AUTH Start ist eine modulare Lösung für Startups. Authentication &
+          Authorization leicht gemacht – inklusive <b>JWT Login</b>, 
+          <b> Zwei-Faktor-Authentifizierung</b>, <b>Passwort-Reset</b> und 
+          <b> Admin-Dashboard</b> zur Benutzerverwaltung.
+        </p>
+
+        {/* Quick actions */}
+        <div className="btn-row">
+          <Link to="/demo-info" className="btn btn-blue">Learn More</Link>
+          <a href="#auth-more" className="btn btn-gray">More about AUTH</a>
+        </div>
+      </section>
+
+      {/* AUTH – More (dynamic section) */}
+      <section id="auth-more" className="detail-section auth-more">
+        <div className="info-grid">
+          {/* Why startups */}
+          <div className="info-card auth-card">
+            <h3 className="info-title">Why Startups?</h3>
+            <ul className="bullet">
+              <li><b>Code-nah & erweiterbar:</b> volle Kontrolle statt „Black-Box“.</li>
+              <li><b>Schneller Start:</b> fertige Flows (Login, 2FA, Reset) sofort nutzbar.</li>
+              <li><b>Stack-Fit:</b> ideal für Java/Spring-Backends – ohne Vendor-Lock-in.</li>
+              <li><b>Didaktik inklusive:</b> klare Beispiele, die Teams verstehen & anpassen.</li>
+            </ul>
+            <p className="note">
+              Vergleich zu Managed Auth (Auth0, Firebase Auth, Cognito): unser Ansatz
+              ist <b>selbst hostbar & anpassbar</b>. Dafür fehlen aktuell noch
+              einige „Enterprise-Komfortfunktionen“ (z. B. SSO-Provider-Vielfalt) – in
+              Planung, priorisiert nach Bedarf.
+            </p>
+          </div>
+
+          {/* Use cases */}
+          <div className="info-card auth-card">
+            <h3 className="info-title">Use Cases (Selection)</h3>
+            <ul className="bullet">
+              <li>User Registration & Account Activation</li>
+              <li>Email Verification & Resend Verification</li>
+              <li>Login with JWT (Access/Refresh)</li>
+              <li>Two-Factor Authentication (2FA)</li>
+              <li>Password Reset (via Code/Token)</li>
+              <li>Roles & Permissions (User/Admin/Trainer)</li>
+              <li>Admin Dashboard for User Management</li>
+            </ul>
+            <p className="note">Alle Flows sind in der Demo lauffähig; Feinschliff laufend.</p>
+          </div>
+
+          {/* Support & Postman */}
+          <div className="info-card auth-card">
+            <h3 className="info-title">Support & Customization</h3>
+            <p>
+              Anpassungen, Schulungen oder Teil-Erweiterungen sind <b>verhandelbar</b>.
+              Wir machen <b>keine fixen Zusagen</b> zu Terminen oder Umfang, bevor
+              Anforderungen gemeinsam geklärt sind. Ziel ist eine pragmatische Lösung,
+              die zu Ihrem Projekt passt.
+            </p>
+            <p className="note">
+              Postman-Collections zu den wichtigsten Endpunkten werden bereitgestellt
+              (<b>in Planung</b>), um Integrationen schneller zu testen.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Demo Videos Section */}
+      <section id="videos" className="videos-section">
+        <h2 className="videos-title">Demo Videos</h2>
+
+        <div className="card-grid">
+          {/* EDU Videos */}
+          <div className="teaser-card edu-card">
+            <h3 className="card-title edu-title">EDU Demos</h3>
+            <div className="video-placeholder">[ EDU Video Placeholder ]</div>
+          </div>
+
+          {/* AUTH Videos */}
+          <div className="teaser-card auth-card">
+            <h3 className="card-title auth-title">AUTH Demos</h3>
+            <div className="video-placeholder">[ AUTH Video Placeholder ]</div>
+          </div>
         </div>
 
-        {/* Footer */}
-        <footer className="mt-12 border-t pt-6 text-center text-sm text-slate-500">
-          <div className="space-y-2">
-            <p>Kontakt:</p>
-            <p>📧 info@clavissimo.com</p>
-            <p>📧 edu@clavissimo.com</p>
-          </div>
-          <div className="flex justify-center gap-6 mt-4">
-            <Link to="/impressum">Impressum</Link>
-            <Link to="/privacy">Datenschutz</Link>
-            <Link to="/docs">Doku</Link>
-          </div>
-        </footer>
-      </div>
+        {/* Demo Accounts */}
+        <div className="demo-accounts">
+          <h3 className="accounts-title">Demo Accounts</h3>
+          <ul>
+            <li>
+              <b>Student:</b> fred.student@example.com / <code>Demo123#</code>
+            </li>
+            <li>
+              <b>Trainer:</b> sebastian.trainer@example.com / <code>Demo123#</code>
+            </li>
+          </ul>
+        </div>
+      </section>
     </div>
   );
 }
