@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button";
 
 // Logo als Inline-SVG-Komponente
 const KiyanLogo = () => (
-  <svg
-    width="320"
-    height="120"
-    viewBox="0 0 520 180"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+ <svg
+  className="w-[360px] h-auto md:w-[420px]"
+  viewBox="0 0 520 180"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+
     <circle cx="90" cy="90" r="90" fill="#FF8900" />
     <text
       x="2"
