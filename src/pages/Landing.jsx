@@ -228,10 +228,11 @@ export default function Landing() {
           </div>
 
           {/* AUTH Videos */}
-          <div className="teaser-card auth-card">
-            <h3 className="card-title auth-title">AUTH Demos</h3>
-            <div className="video-placeholder">[ AUTH Video Placeholder ]</div>
-          </div>
+          <video controls width="100%">
+            <source src="/videos/clavisimo-auth-demo.webm" type="video/webm" />
+            Your browser does not support the video tag.
+          </video>
+
         </div>
 
         {/* Demo Accounts */}
