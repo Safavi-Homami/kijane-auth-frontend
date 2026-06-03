@@ -283,3 +283,69 @@ input[type="radio"] {
   margin: 0 4px;
   vertical-align: middle;
 }
+
+/* ---- Version-1 Rollen-Editor ---- */
+
+.role-editor-card {
+  max-width: 560px;
+}
+
+.role-editor-user-info {
+  display: grid;
+  gap: 4px;
+  margin: 12px 0 14px;
+  text-align: center;
+}
+
+.role-editor-user-info strong {
+  font-size: 1.05rem;
+}
+
+.role-editor-user-info span {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.role-editor-current {
+  margin: 12px 0;
+  text-align: center;
+  color: #374151;
+}
+
+.role-editor-note {
+  margin: 12px 0 16px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #f3f4f6;
+  color: #374151;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.role-editor-list {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.role-editor-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.role-editor-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.role-editor-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.role-editor-actions .btn {
+  width: 100%;
+}

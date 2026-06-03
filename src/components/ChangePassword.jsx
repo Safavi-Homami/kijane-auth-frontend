@@ -46,18 +46,20 @@ const ChangePassword = () => {
         navigate("/login");
       }, 3000);
     } catch (error) {
-      console.error("Fehler beim Passwortwechsel:", error);
+      console.error("Fehler beim Passwortwechsel");
       const msg = error.response?.data?.message || "Unbekannter Fehler";
       setErrorMessage(`❌ Fehler: ${msg}`);
       setSuccessMessage("");
     }
   };
 
-  return (
-    <div className="page-wrapper">
+ return (
+  <div className="auth-page-bg auth-form-page change-password-auth-page">
+    <div className="auth-page-zoom">
+      <div className="page-wrapper">
         <div className="form-container">
 
-            <h2>🔐 Passwort ändern</h2>
+          <h2>🔐 Passwort ändern</h2>
 
       {successMessage && (
         <p style={{ color: "green" }}>{successMessage}</p>
@@ -137,11 +139,14 @@ const ChangePassword = () => {
         </span>
       </div>
 
-      <button onClick={handlePasswordChange}>
+            <button onClick={handlePasswordChange}>
         Passwort ändern
       </button>
+
+        </div>
       </div>
     </div>
+  </div>
   );
 };
 

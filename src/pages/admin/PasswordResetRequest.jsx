@@ -28,9 +28,13 @@ const PasswordResetRequest = () => {
     }
   };
 
-  return (
-    <div className="form-container">
-      <h2>Passwort zurücksetzen</h2>
+ return (
+  <div className="auth-page-bg auth-form-page password-reset-request-auth-page">
+    <div className="auth-page-zoom">
+      <div className="password-reset-wrapper">
+        <div className="form-container">
+
+          <h2>Passwort zurücksetzen</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">E-Mail-Adresse:</label>
         <input
@@ -49,6 +53,9 @@ const PasswordResetRequest = () => {
 
       {message && <p className="success">{message}</p>}
       {error && <p className="error">{error}</p>}
+    </div>
+    </div>
+    </div>
     </div>
   );
 };

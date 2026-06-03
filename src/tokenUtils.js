@@ -1,49 +1,51 @@
-import api from "./api"; // ✅ korrekt und sicher
-
+import api from "./api";
 
 const TOKEN_KEY = "token";
+const AUTH_EVENT = "auth-changed";
 
-export const getToken = () => {
-  return sessionStorage.getItem(TOKEN_KEY);
+const fireAuthEvent = () => {
+  try {
+    window.dispatchEvent(new Event(AUTH_EVENT));
+  } catch {}
 };
+
+export const getToken = () => sessionStorage.getItem(TOKEN_KEY);
 
 export const setToken = (token) => {
   sessionStorage.setItem(TOKEN_KEY, token);
-  localStorage.removeItem(TOKEN_KEY); // Bereinigt alte Konflikte
+  localStorage.removeItem(TOKEN_KEY);
+  fireAuthEvent();
 };
 
 export const removeToken = () => {
+    console.log("🚨 TOKEN wird REMOVED im tokenutils!!!", new Error().stack);
+
   sessionStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(TOKEN_KEY); // Sicher ist sicher
+  localStorage.removeItem(TOKEN_KEY);
+  fireAuthEvent();
 };
 
 export const isTokenExpired = (token) => {
   try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
+    const payload = JSON.parse(atob(token.split(".")[1]));
     const expiry = payload.exp;
     if (!expiry) return true;
     return Date.now() >= expiry * 1000;
   } catch (e) {
-    console.warn("⚠️ Token konnte nicht geparst werden:", e);
+    console.warn("Token konnte nicht geprüft werden.");
     return true;
   }
 };
 
-export function storeToken(token) {
-  sessionStorage.setItem("token", token);
-}
-
-// ✅ NEU
 export const setAuthToken = (token) => {
   if (token) {
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    sessionStorage.setItem("token", token); // ✨ automatisch speichern
+    sessionStorage.setItem(TOKEN_KEY, token);
   } else {
     delete api.defaults.headers.common["Authorization"];
-    sessionStorage.removeItem("token");
+    sessionStorage.removeItem(TOKEN_KEY);
   }
+  fireAuthEvent();
 };
 
-
-export const saveToken = setToken; // Alias für Kompatibilität
-
+export const saveToken = setToken; // Alias

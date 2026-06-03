@@ -35,7 +35,7 @@ export default function RegistrationConfirmation() {
       await sendActivationCode(target);
       setMsg(`Neuer Code wurde an ${target} gesendet.`);
     } catch (e) {
-      console.error(e);
+      
       setErr("Senden fehlgeschlagen. Bitte später erneut versuchen.");
     } finally {
       setBusy(false);

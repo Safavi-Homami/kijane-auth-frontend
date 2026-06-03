@@ -82,8 +82,10 @@ export default function ResetPasswordWithCode() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100 flex items-start md:items-center justify-center px-4 py-10">
-      <Card className="w-full max-w-xl rounded-2xl shadow-sm">
+  <div className="auth-page-bg auth-form-page reset-password-code-auth-page">
+    <div className="auth-page-zoom">
+      <div className="reset-password-code-wrapper">
+        <Card className="w-full max-w-xl rounded-2xl shadow-sm reset-password-code-card">
         <CardHeader>
           <CardTitle className="text-lg md:text-xl text-center">
             🔐 Passwort mit Code zurücksetzen
@@ -197,6 +199,8 @@ export default function ResetPasswordWithCode() {
           </form>
         </CardContent>
       </Card>
+    </div>
+    </div>
     </div>
   );
 }

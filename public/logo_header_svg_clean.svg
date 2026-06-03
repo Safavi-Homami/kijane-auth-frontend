@@ -1,0 +1,27 @@
+<svg width="620" height="170" viewBox="0 0 620 170" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Clavisimo Logo">
+  <defs>
+    <linearGradient id="circleG" x1="20" y1="24" x2="128" y2="132" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffbf70"/>
+      <stop offset="0.52" stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="keyG" x1="138" y1="34" x2="548" y2="34" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e5e7eb"/>
+    </linearGradient>
+  </defs>
+  <circle cx="70" cy="86" r="48" fill="url(#circleG)"/>
+  <circle cx="70" cy="86" r="56" stroke="#f97316" stroke-opacity="0.35" stroke-width="7"/>
+  <circle cx="70" cy="86" r="41" stroke="#111827" stroke-opacity="0.45" stroke-width="3"/>
+  <text x="70" y="108" text-anchor="middle" font-family="Georgia, serif" font-size="68" font-weight="700" fill="#111827">C</text>
+  <g stroke="url(#keyG)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="146" cy="38" r="16" fill="none"/>
+    <path d="M162 38 H400"/>
+    <path d="M400 38 C406 38 406 48 412 48 C418 48 418 38 424 38 H540"/>
+    <path d="M540 38 V52 H556"/>
+    <path d="M540 38 V60 H566" opacity="0.72"/>
+  </g>
+  <text x="126" y="109" font-family="Georgia, serif" font-size="68" font-weight="700">
+    <tspan fill="#f8fafc">lavi</tspan><tspan fill="#fb923c">simo</tspan>
+  </text>
+</svg>

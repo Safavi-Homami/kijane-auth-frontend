@@ -1,74 +1,58 @@
 import { useEffect, useState } from "react";
 import AddCourseForm from "../AddCourseForm";
+import CreateAuthorPage from "../trainer/CreateAuthorPage";
+import Modal from "../../components/Modal";
 import api from "../../api";
 
 export default function TrainerArea() {
   const [authors, setAuthors] = useState([]);
 
+  const [showCourseModal, setShowCourseModal] = useState(false);
+  const [showAuthorModal, setShowAuthorModal] = useState(false);
+
   useEffect(() => {
-    api.get("/authors")
-      .then((res) => setAuthors(res.data))
-      .catch((err) => console.error("Fehler beim Laden der Autoren:", err));
+    api.get("/authors/my").then((res) => setAuthors(res.data));
   }, []);
 
   return (
     <div>
-      <AddCourseForm authors={authors} />
+      {/* Buttons */}
+      <div style={{ marginBottom: "1rem", display: "flex", gap: "1rem" }}>
+        <button
+          className="btn btn-primary"
+          onClick={() => setShowCourseModal(true)}
+        >
+          + Neuer Kurs
+        </button>
+
+        <button
+          className="btn btn-secondary"
+          onClick={() => setShowAuthorModal(true)}
+        >
+          + Neuer Autor
+        </button>
+      </div>
+
+      {/* Modal: Kurs */}
+      <Modal
+        isOpen={showCourseModal}
+        onClose={() => setShowCourseModal(false)}
+      >
+        <AddCourseForm
+          authors={authors}
+          onClose={() => setShowCourseModal(false)}  // ✅ WICHTIG
+        />
+      </Modal>
+
+      {/* Modal: Autor */}
+      <Modal
+        isOpen={showAuthorModal}
+        onClose={() => setShowAuthorModal(false)}
+      >
+        <CreateAuthorPage
+          onClose={() => setShowAuthorModal(false)} // ✅ WICHTIG
+        />
+      </Modal>
     </div>
   );
 }
-
-
-
-
-/*
-import React, { useEffect, useState } from "react";
-import AddCourseForm from "../AddCourseForm"; // ✅ korrekt
-import api from "../../api"; // <– wichtig: deine zentrale API mit Token-Header
-
-export default function TrainerArea() {
-  const [authors, setAuthors] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // Autoren laden bei Aufruf der Trainer-Seite
-  useEffect(() => {
-    api.get("/authors")
-      .then((res) => {
-        if (Array.isArray(res.data)) {
-          setAuthors(res.data);
-        } else {
-          console.error("❌ res.data ist kein Array:", res.data);
-        }
-      })
-      .catch((err) => {
-        console.error("❌ Fehler beim Laden der Autoren:", err);
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (loading) {
-    return <p>⏳ Lade Daten ...</p>;
-  }
-
-  return (
-    <div>
-      <h2>👨‍🏫 Trainerbereich</h2>
-      <p>Willkommen im Trainer-Dashboard</p>
-
-      <h3>📚 Kurs erstellen</h3>
-      <AddCourseForm authors={authors} />
-
-      <hr />
-
-      <h3>👥 Verfügbare Autoren ({authors.length})</h3>
-      <ul>
-        {authors.map((a) => (
-          <li key={a.id}>
-            {a.firstName} {a.lastName}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-*/

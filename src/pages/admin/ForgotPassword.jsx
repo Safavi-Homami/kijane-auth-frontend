@@ -35,14 +35,16 @@ export default function ForgotPassword() {
       // Bestätigung + Zielseite unverändert (deine Logik)
       navigate("/reset-password-code", { state: { email, justSent: true } });
     } catch (err) {
-      console.error("Fehler beim Zurücksetzen:", err);
+      console.error("Fehler beim Zurücksetzen:");
       setError("Fehler beim Zurücksetzen des Passworts.");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100 flex items-start md:items-center justify-center px-4 py-10">
-      <Card className="w-full max-w-md rounded-2xl shadow-sm">
+  <div className="auth-page-bg auth-form-page forgot-password-auth-page">
+    <div className="auth-page-zoom">
+      <div className="forgot-password-wrapper">
+        <Card className="w-full max-w-md rounded-2xl shadow-sm forgot-password-card">
         <CardHeader>
           <CardTitle className="text-lg md:text-xl text-center">🔒 Passwort vergessen</CardTitle>
         </CardHeader>
@@ -103,5 +105,7 @@ export default function ForgotPassword() {
         </CardContent>
       </Card>
     </div>
+   </div>
+   </div> 
   );
 }

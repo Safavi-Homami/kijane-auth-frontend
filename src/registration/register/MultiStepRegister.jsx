@@ -9,24 +9,28 @@ import { registerUser } from "@/api";
 
 const MultiStepRegister = () => {
   const [step, setStep] = useState(1);
+
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    street: "",
-    zip: "",
-    city: "",
-    country: "",
-    role: "",
-    qualification: "",
-    education: "",
-    motivation: "",
-    password: "",
-    confirmPassword: "",
-    agreeTerms: false,
-    newsletter: false,
-  });
+  salutation: "",
+  title: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  companyName: "",
+  street: "",
+  zip: "",
+  city: "",
+  country: "",
+  role: "",
+  qualification: "",
+  education: "",
+  motivation: "",
+  password: "",
+  confirmPassword: "",
+  agreeTerms: false,
+  newsletter: false,
+});
 
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -40,21 +44,78 @@ const MultiStepRegister = () => {
     }));
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.firstName.trim()) newErrors.firstName = "Vorname ist erforderlich.";
-    if (!formData.lastName.trim()) newErrors.lastName = "Nachname ist erforderlich.";
-    if (!formData.email.includes("@")) newErrors.email = "Ungültige E-Mail-Adresse.";
-    if (!formData.password)
-      newErrors.password = "Passwort ist erforderlich.";
-    else if (!/(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}/.test(formData.password))
-      newErrors.password = "Passwort muss mindestens 8 Zeichen, 1 Großbuchstaben, 1 Zahl und 1 Sonderzeichen enthalten.";
-    if (formData.password !== formData.confirmPassword)
-      newErrors.confirmPassword = "Passwörter stimmen nicht überein.";
-    if (!formData.agreeTerms)
-      newErrors.agreeTerms = "Du musst den AGB zustimmen.";
-    return newErrors;
-  };
+ const validateForm = () => {
+  const newErrors = {};
+
+  if (!formData.salutation?.trim()) {
+    newErrors.salutation = "Anrede ist erforderlich.";
+  }
+
+  if (!formData.firstName?.trim()) {
+    newErrors.firstName = "Vorname ist erforderlich.";
+  }
+
+  if (!formData.lastName?.trim()) {
+    newErrors.lastName = "Nachname ist erforderlich.";
+  }
+
+  if (!formData.email?.trim()) {
+    newErrors.email = "E-Mail ist erforderlich.";
+  } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    newErrors.email = "Ungültige E-Mail-Adresse.";
+  }
+
+  if (!formData.phone?.trim()) {
+    newErrors.phone = "Telefon / Mobilnummer ist erforderlich.";
+  }
+
+  if (!formData.street?.trim()) {
+    newErrors.street = "Straße und Hausnummer sind erforderlich.";
+  }
+
+  if (!formData.zip?.trim()) {
+    newErrors.zip = "PLZ ist erforderlich.";
+  }
+
+  if (!formData.city?.trim()) {
+    newErrors.city = "Stadt ist erforderlich.";
+  }
+
+  if (!formData.country?.trim()) {
+    newErrors.country = "Land ist erforderlich.";
+  }
+
+  if (!formData.role) {
+    newErrors.role = "Nutzungsart ist erforderlich.";
+  }
+
+  if (formData.role === "STUDENT" && !formData.education?.trim()) {
+    newErrors.education = "Bildungsstatus ist erforderlich.";
+  }
+
+  if (formData.role === "TRAINER" && !formData.qualification?.trim()) {
+    newErrors.qualification = "Qualifikation ist erforderlich.";
+  }
+
+  if (!formData.password) {
+    newErrors.password = "Passwort ist erforderlich.";
+  } else if (
+    !/(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}/.test(formData.password)
+  ) {
+    newErrors.password =
+      "Passwort muss mindestens 8 Zeichen, 1 Großbuchstaben, 1 Zahl und 1 Sonderzeichen enthalten.";
+  }
+
+  if (formData.password !== formData.confirmPassword) {
+    newErrors.confirmPassword = "Passwörter stimmen nicht überein.";
+  }
+
+  if (!formData.agreeTerms) {
+    newErrors.agreeTerms = "Du musst den AGB zustimmen.";
+  }
+
+  return newErrors;
+};
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
@@ -69,18 +130,46 @@ const MultiStepRegister = () => {
 
     try {
       const adjustedData = {
-        ...formData,
-        username: formData.email.trim().toLowerCase(),
-      };
+  email: formData.email.trim().toLowerCase(),
+
+  salutation: formData.salutation,
+  title: formData.title?.trim() || "",
+
+  firstName: formData.firstName.trim(),
+  lastName: formData.lastName.trim(),
+  phone: formData.phone.trim(),
+
+  companyName: formData.companyName?.trim() || "",
+
+  streetName: formData.street.trim(),
+  zipCode: formData.zip.trim(),
+  city: formData.city.trim(),
+  country: formData.country.trim(),
+
+  role: formData.role,
+  qualification: formData.qualification?.trim() || "",
+  education: formData.education?.trim() || "",
+  motivation: formData.motivation?.trim() || "",
+
+  password: formData.password,
+  confirmPassword: formData.confirmPassword,
+
+  agreeTerms: formData.agreeTerms,
+  newsletter: formData.newsletter,
+};
 
       const response = await registerUser(adjustedData);
-      sessionStorage.setItem("token", response.data.token);
-      sessionStorage.setItem("username", adjustedData.username);
-      console.log("✅ Registrierung erfolgreich:", response.data);
 
-      setStep(4);
+// WICHTIG: Registrierung erzeugt keinen Login-Token.
+// Deshalb keinen Token speichern.
+sessionStorage.removeItem("token");
+sessionStorage.setItem("username", adjustedData.email);
+
+
+
+setStep(4);
     } catch (error) {
-      console.error("❌ Registrierung fehlgeschlagen:", error);
+      console.error("❌ Registrierung fehlgeschlagen!");
       const backendMessage = error?.response?.data?.message;
       setErrors({
         global: backendMessage || "Fehler bei der Registrierung. Bitte erneut versuchen.",
@@ -101,8 +190,10 @@ const MultiStepRegister = () => {
   };
 
   return (
-    <div className="register-container">
-      {isLoading ? (
+    <div className="auth-page-bg register-page-wrapper">
+      <div className="auth-page-zoom">
+        <div className="register-container">
+          {isLoading ? (
         <div className="spinner"></div>
       ) : (
         <>
@@ -131,14 +222,28 @@ const MultiStepRegister = () => {
           )}
           {step === 4 && (
             <Step4Activation
-              formData={formData}
-              onSubmit={() => navigate("/login")}
-            />
+  formData={formData}
+  onSubmit={() => {
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("username");
+    navigate("/login", {
+      replace: true,
+      state: {
+        flash: {
+          type: "success",
+          message: "Account erfolgreich aktiviert. Bitte logge dich jetzt ein.",
+        },
+      },
+    });
+  }}
+/>
           )}
 
           {errors.global && <p className="error-message">{errors.global}</p>}
         </>
-      )}
+          )}
+        </div>
+      </div>
     </div>
   );
 };

@@ -9,20 +9,32 @@ function PrivateRoute({ children, allowedRoles }) {
   const token = sessionStorage.getItem("token");
   const { user } = useUser();
 
+    // ⏳ User lädt noch → nichts entscheiden
+  if (token && !user) {
+    return null; // oder Spinner
+  }
+
+
+ 
+
   // Falls kein Token vorhanden → Weiterleitung zur Login-Seite
   if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   // Falls Rollen gefordert sind, aber der User keine davon hat → Weiterleitung
-  if (
-    allowedRoles &&
-    !allowedRoles.some((role) => user?.roles?.includes(role))
-  ) {
-    return <Navigate to="/unauthorized" replace />;
-  }
-
-  return children;
+ if (
+      allowedRoles &&
+      user?.roles &&
+      !allowedRoles.some(
+        (role) =>
+          user.roles.includes(role) ||
+          user.roles.includes(`ROLE_${role}`)
+      )
+    ) {
+      return <Navigate to="/unauthorized" replace />;
+    }
+return children;
 }
 
 PrivateRoute.propTypes = {

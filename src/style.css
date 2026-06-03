@@ -89,3 +89,52 @@ button:disabled {
   margin-top: 1rem;
   color: #dc3545;
 }
+
+/* =========================================================
+   Password Reset Request / Confirm im Clavisimo Auth-Design
+   ========================================================= */
+
+.password-reset-request-auth-page,
+.password-reset-confirm-auth-page {
+  margin-top: 0 !important;
+  padding-top: 32px !important;
+  padding-bottom: 70px !important;
+  min-height: calc(100vh - 90px);
+}
+
+.password-reset-request-auth-page .auth-page-zoom,
+.password-reset-confirm-auth-page .auth-page-zoom {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.password-reset-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.password-reset-request-auth-page .form-container,
+.password-reset-confirm-auth-page .form-container {
+  margin-top: 0 !important;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 24px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.38);
+}
+
+/* Falls page-background/container wieder weißen Abstand erzeugt */
+.page-background:has(.password-reset-request-auth-page),
+.page-background:has(.password-reset-confirm-auth-page) {
+  padding-top: 0 !important;
+  background: transparent !important;
+}
+
+.page-background:has(.password-reset-request-auth-page) .container,
+.page-background:has(.password-reset-confirm-auth-page) .container {
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+

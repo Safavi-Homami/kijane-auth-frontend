@@ -54,12 +54,26 @@ const PasswordResetConfirm = () => {
   };
 
   if (validCode === false) {
-    return <p className="error">❌ Ungültiger oder abgelaufener Code</p>;
-  }
-
   return (
-    <div className="form-container">
-      <h2>Passwort ändern</h2>
+    <div className="auth-page-bg auth-form-page password-reset-confirm-auth-page">
+      <div className="auth-page-zoom">
+        <div className="password-reset-wrapper">
+          <div className="form-container">
+            <p className="error">❌ Ungültiger oder abgelaufener Code</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ return (
+  <div className="auth-page-bg auth-form-page password-reset-confirm-auth-page">
+    <div className="auth-page-zoom">
+      <div className="password-reset-wrapper">
+        <div className="form-container">
+
+          <h2>Passwort ändern</h2>
       {validCode === null && <p>Lade Codeprüfung...</p>}
       {validCode && (
         <form onSubmit={handleSubmit}>
@@ -89,6 +103,9 @@ const PasswordResetConfirm = () => {
 
       {message && <p className="success">{message}</p>}
       {error && <p className="error">{error}</p>}
+    </div>
+    </div>
+    </div>
     </div>
   );
 };

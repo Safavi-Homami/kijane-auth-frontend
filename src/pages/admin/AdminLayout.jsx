@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import "./AdminLayout.css";
 
+import { BookOpenCheck } from "lucide-react";
+
 
 const AdminLayout = () => {
   return (
@@ -32,6 +34,15 @@ const AdminLayout = () => {
               <Users className="icon" />
               Benutzer
             </NavLink>
+            <NavLink to="/admin/course-access" className="sidebar-link">
+              <ShieldCheck className="icon" />
+              Kursfreigaben
+            </NavLink>
+            <NavLink to="/admin/groups" className="sidebar-link">
+              <Users className="icon" />
+              Gruppen
+            </NavLink>
+
           </nav>
         </div>
 

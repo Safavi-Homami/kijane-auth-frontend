@@ -46,9 +46,13 @@ export default function Reset2faVerifyCode() {
     }
   };
 
-  return (
-    <div className="form-container">
-      <h2>2FA zurücksetzen – Code eingeben</h2>
+ return (
+  <div className="auth-page-bg auth-form-page reset-2fa-verify-auth-page">
+    <div className="auth-page-zoom">
+      <div className="reset-2fa-verify-wrapper">
+        <div className="form-container">
+
+          <h2>2FA zurücksetzen – Code eingeben</h2>
       <p>Den Bestätigungscode hast du per E‑Mail erhalten.</p>
       <form onSubmit={handleSubmit}>
         {/* Email ist optional – nur nötig, wenn dein Backend sie verlangt */}
@@ -80,6 +84,10 @@ export default function Reset2faVerifyCode() {
       {success && <p className="success-msg">✅ 2FA wurde deaktiviert.</p>}
       {error && <p className="error">{error}</p>}
     </div>
+
+      </div>
+    </div>
+  </div>
   );
 }
 

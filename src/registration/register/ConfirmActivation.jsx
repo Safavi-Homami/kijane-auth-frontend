@@ -42,8 +42,10 @@ const ConfirmActivation = () => {
   };
 
   return (
-    <div className="activation-container">
-      <h2>Schritt 2: Konto aktivieren</h2>
+    <div className="auth-page-bg activation-page-wrapper">
+      <div className="auth-page-zoom">
+        <div className="activation-container">
+          <h2>Schritt 2: Konto aktivieren</h2>
 
       {!success && (
         <>
@@ -60,11 +62,13 @@ const ConfirmActivation = () => {
 
       {message && <p className="info">{message}</p>}
       {error && <p className="error">{error}</p>}
-      {success && (
-        <p className="success">
-          ✅ Konto erfolgreich aktiviert! Du kannst dich jetzt einloggen.
-        </p>
-      )}
+          {success && (
+            <p className="success">
+              ✅ Konto erfolgreich aktiviert! Du kannst dich jetzt einloggen.
+            </p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

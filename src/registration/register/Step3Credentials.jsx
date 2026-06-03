@@ -8,12 +8,20 @@ const Step3Credentials = ({ formData, setFormData, onBack, onSubmit }) => {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
-  };
+  const { name, value, type, checked } = e.target;
+
+  const newValue = type === "checkbox" ? checked : value;
+
+  setFormData((prev) => ({
+    ...prev,
+    [name]: newValue,
+  }));
+
+  setErrors((prev) => ({
+    ...prev,
+    [name]: undefined,
+  }));
+};
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);

@@ -12,7 +12,7 @@ const RegisterForm = ({ formData }) => {
       sessionStorage.setItem("username", response.data.username); // wichtig für send-code
       navigate("/register/activate"); // Weiterleitung zu Schritt 2
     } catch (error) {
-      console.error("❌ Registrierung fehlgeschlagen:", error);
+      console.error("❌ Registrierung fehlgeschlagen!");
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import api from "../api";
 import { useNavigate, Link } from "react-router-dom";
 
+
 const ConfirmTwoFaReset = () => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
@@ -24,14 +25,18 @@ const ConfirmTwoFaReset = () => {
       // Optional: Automatisch weiter zur Login-Seite
       setTimeout(() => navigate("/login"), 3000);
     } catch (err) {
-      console.error("Fehler bei der Bestätigung:", err);
+      console.error("Fehler bei der Bestätigung!");
       setError("Code ungültig oder abgelaufen.");
     }
   };
 
   return (
-    <div className="form-container">
-      <h2>2FA-Reset bestätigen</h2>
+  <div className="auth-page-bg auth-form-page confirm-twofa-reset-auth-page">
+    <div className="auth-page-zoom">
+      <div className="confirm-twofa-reset-wrapper">
+        <div className="form-container">
+
+          <h2>2FA-Reset bestätigen</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">E-Mail-Adresse:</label>
         <input
@@ -62,6 +67,9 @@ const ConfirmTwoFaReset = () => {
       {message && <p className="success">{message}</p>}
       {error && <p className="error">{error}</p>}
     </div>
+          </div>
+    </div>
+  </div>
   );
 };
 

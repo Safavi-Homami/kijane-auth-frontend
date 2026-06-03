@@ -1,7 +1,25 @@
-<svg width="520" height="180" viewBox="0 0 520 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="90" cy="90" r="90" fill="#FF8900"/>
-  <text x="2" y="115" font-family="Georgia, serif" font-weight="bold" font-size="74">
-    <tspan fill="black">clavi</tspan><tspan fill="#FF8900">simo</tspan>
+<svg width="240" height="70" viewBox="0 0 680 190" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Clavisimo Logo">
+  <defs>
+    <linearGradient id="circle" x1="24" y1="26" x2="144" y2="154">
+      <stop stop-color="#ffb15a"/>
+      <stop offset="0.48" stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="key" x1="162" y1="42" x2="560" y2="72">
+      <stop stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#cbd5e1"/>
+    </linearGradient>
+  </defs>
+  <circle cx="86" cy="96" r="58" fill="url(#circle)"/>
+  <circle cx="86" cy="96" r="68" stroke="rgba(249,115,22,0.28)" stroke-width="10"/>
+  <circle cx="86" cy="96" r="50" stroke="rgba(15,23,42,0.45)" stroke-width="3"/>
+  <text x="86" y="122" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="82" fill="#111827">C</text>
+  <g stroke="url(#key)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="178" cy="52" r="19" fill="none"/>
+    <line x1="197" y1="52" x2="532" y2="52"/>
+    <path d="M532 52 L532 68 L548 68 L548 82 L566 82"/>
+  </g>
+  <text x="145" y="125" font-family="Georgia, serif" font-weight="bold" font-size="78">
+    <tspan fill="#f8fafc">lavi</tspan><tspan fill="#fb923c">simo</tspan>
   </text>
-  <text x="155" y="155" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="33" fill="white" letter-spacing="2"></text>
 </svg>

@@ -49,20 +49,11 @@ function ConfirmTwoFa() {
   const requires2fa = sessionStorage.getItem("requiresTwoFactor") === "true";
 
   if (token || pending2fa !== "1" || !requires2fa) {
-    console.warn("Redirecting to /login: Bedingungen nicht erfüllt", {
-      token,
-      pending2fa,
-      requires2fa,
-    });
+   console.warn("2FA-Redirect zur Login-Seite.");
     navigate("/login");
   }
 }, []);
 
-console.log("Confirm2FA gestartet mit:", {
-  token: sessionStorage.getItem("token"),
-  pending2fa: sessionStorage.getItem("pending2fa"),
-  requiresTwoFactor: sessionStorage.getItem("requiresTwoFactor"),
-});
 
 
   const handleLogin = async (e) => {
@@ -96,7 +87,7 @@ console.log("Confirm2FA gestartet mit:", {
     const user = await getCurrentUser();
     setUser(user);
   } catch (err) {
-    console.error("Fehler beim Laden des Benutzers nach 2FA:", err);
+    console.error("Fehler beim Laden des Benutzers nach 2FA!");
     setError("Login erfolgreich, aber Benutzer konnte nicht geladen werden.");
     return;
   }
@@ -105,7 +96,7 @@ console.log("Confirm2FA gestartet mit:", {
   navigate(from || "/courses", { replace: true });
 
   } catch (err) {
-  console.error("Login-Fehler:", err);
+  console.error("Login-Fehler!");
   const message = err?.response?.data?.message;
 
   if (message?.toLowerCase().includes("abgelaufen")) {
@@ -122,8 +113,12 @@ console.log("Confirm2FA gestartet mit:", {
 
 
   return (
-    <div className="form-container">
-      <h2>Login (2FA)</h2>
+  <div className="auth-page-bg auth-form-page confirm-twofa-auth-page">
+    <div className="auth-page-zoom">
+      <div className="confirm-twofa-wrapper">
+        <div className="form-container">
+
+          <h2>Login (2FA)</h2>
 
       {showNewCodeHint && (
         <div
@@ -190,6 +185,11 @@ console.log("Confirm2FA gestartet mit:", {
 
 
     </div>
+
+      </div>
+      </div>
+      </div>
+
   );
 }
 

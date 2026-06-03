@@ -1,82 +1,135 @@
-// src/pages/admin/UserRoleEditor.jsx
 import { useEffect, useMemo, useState } from "react";
-import api from "../../api";
 
-const ALL_ROLES = ["ADMIN", "USER", "TRAINER", "MANAGER", "EDITOR", "AUTHOR"];
+const EDITABLE_ROLES = ["STUDENT", "TRAINER", "ADMIN"];
+const BASE_ROLE = "USER";
 
-const UserRoleEditor = ({ user, onClose, onSave, onNotify }) => {
-  const initial = useMemo(() => user?.roles || [], [user]);
-  const [selected, setSelected] = useState(initial);
-  const [saving, setSaving] = useState(false);
+function normalizeRoleName(role) {
+  if (!role) return "";
+  if (typeof role === "string") return role;
+  if (typeof role === "object" && role.name) return role.name;
+  return "";
+}
 
-  useEffect(() => setSelected(initial), [initial]);
+function UserRoleEditor({ user, onSave, onClose, saving = false }) {
+  const currentRoleNames = useMemo(() => {
+    return (user?.roles || []).map(normalizeRoleName).filter(Boolean);
+  }, [user]);
 
-  const toggle = (role) => {
-    setSelected((prev) =>
-      prev.includes(role) ? prev.filter((r) => r !== role) : [...prev, role]
+  const [selectedRoles, setSelectedRoles] = useState([]);
+
+  useEffect(() => {
+    const visibleRoles = EDITABLE_ROLES.filter((role) =>
+      currentRoleNames.includes(role)
     );
+
+    setSelectedRoles(visibleRoles);
+  }, [currentRoleNames]);
+
+  if (!user) return null;
+
+  const displayName =
+    user.fullName ||
+    `${user.firstName || ""} ${user.lastName || ""}`.trim() ||
+    user.username ||
+    user.email ||
+    "Benutzer";
+
+  const displayEmail = user.email || user.username || "";
+
+  const hasInternalUserRole = currentRoleNames.includes(BASE_ROLE);
+
+  const handleToggleRole = (role) => {
+    setSelectedRoles((prev) => {
+      if (prev.includes(role)) {
+        return prev.filter((r) => r !== role);
+      }
+
+      return [...prev, role];
+    });
   };
 
-  const getToken = () =>
-  sessionStorage.getItem("token") ||
-  sessionStorage.getItem("authToken") ||
-  localStorage.getItem("token") ||
-  localStorage.getItem("authToken");
-
-const save = async () => {
-  const token = getToken();
-
-  try {
-    setSaving(true);
-    await api.put(
-      `/admin/v1/users/${user.id}/roles`,
-      { roles: selected },                   // <<==== DTO!
-      token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
+  const handleSubmit = () => {
+    const orderedRoles = EDITABLE_ROLES.filter((role) =>
+      selectedRoles.includes(role)
     );
-    onNotify?.("success", "Rollen gespeichert.");
-    onSave?.();
-  } catch (err) {
-    const msg =
-      err?.response?.data?.message ||
-      (err?.response?.status === 401
-        ? "Sitzung abgelaufen. Bitte neu einloggen."
-        : "Fehler beim Speichern der Rollen.");
-    onNotify?.("error", msg);
-    console.error("Rollen speichern fehlgeschlagen:", err);
-  } finally {
-    setSaving(false);
-  }
-};
+
+    onSave(user, orderedRoles);
+  };
 
   return (
-    <div>
-      <p className="ul-muted">
-        Aktuelle Rollen: {(user?.roles || []).join(", ")}
-      </p>
+    <div className="ul-modal">
+      <div className="ul-modal-card role-editor-card">
+        <div className="ul-modal-head">
+          <strong>Rollen bearbeiten</strong>
 
-      <div style={{ display: "grid", gap: 8, marginBottom: 16 }}>
-        {ALL_ROLES.map((r) => (
-          <label key={r} className="role-checkbox">
-            <input
-              type="checkbox"
-              checked={selected.includes(r)}
-              onChange={() => toggle(r)}
-            />
-            <span>{r}</span>
-          </label>
-        ))}
-      </div>
+          <button
+            type="button"
+            className="btn btn-icon"
+            onClick={onClose}
+            disabled={saving}
+            aria-label="Schließen"
+          >
+            ✕
+          </button>
+        </div>
 
-      <div style={{ display: "flex", gap: 8 }}>
-        <button className="btn btn-primary" onClick={save} disabled={saving}>
-          {saving ? "Speichere…" : "Speichern"}
-        </button>
-        <button className="btn btn-secondary" onClick={onClose} disabled={saving}>
-          Abbrechen
-        </button>
+        <div className="role-editor-user-info">
+          <strong>{displayName}</strong>
+          {displayEmail && <span>{displayEmail}</span>}
+        </div>
+
+        <div className="role-editor-current">
+          Aktuelle Version-1-Rollen:{" "}
+          <strong>
+            {selectedRoles.length > 0
+              ? selectedRoles.join(", ")
+              : "Keine sichtbare Version-1-Rolle"}
+          </strong>
+        </div>
+
+        <div className="role-editor-note">
+          Die interne Basisrolle <strong>USER</strong>{" "}
+          {hasInternalUserRole
+            ? "ist vorhanden und bleibt erhalten."
+            : "wird beim Speichern automatisch ergänzt."}
+        </div>
+
+        <div className="role-editor-list">
+          {EDITABLE_ROLES.map((role) => (
+            <label key={role} className="role-editor-row">
+              <input
+                type="checkbox"
+                checked={selectedRoles.includes(role)}
+                onChange={() => handleToggleRole(role)}
+                disabled={saving}
+              />
+              <span>{role}</span>
+            </label>
+          ))}
+        </div>
+
+        <div className="role-editor-actions">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleSubmit}
+            disabled={saving}
+          >
+            {saving ? "Speichern…" : "Speichern"}
+          </button>
+
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={onClose}
+            disabled={saving}
+          >
+            Abbrechen
+          </button>
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default UserRoleEditor;

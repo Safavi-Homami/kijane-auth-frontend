@@ -1,61 +1,119 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useUser } from "../context/useUser";
+import React, { useMemo, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./Navigation.css";
+import { useUser } from "../context/UserContext";
+import { removeToken } from "../tokenUtils";
 
 export default function Navigation() {
-  const { user } = useUser();
-  const location = useLocation();
+  const navigate = useNavigate();
+  const { user, setUser, logout } = useUser();
 
-  const isLoggedIn = !!user;
-  const isTrainer = !!user?.roles?.includes("TRAINER");
+  const [loggingOut, setLoggingOut] = useState(false);
 
+  const token = sessionStorage.getItem("token");
 
-  // Zeige einen kompakten 2FA‑Reset-Link nur dann, wenn es sinnvoll ist:
-  // 1) Der Server hat uns gerade in den 2FA-Flow geschickt (twoFaRequired = true), ODER
-  // 2) Wir befinden uns bereits auf einer 2FA-Seite/Route.
-  const onTwoFaRoute =
-    location.pathname.startsWith("/confirm-2fa") ||
-    location.pathname.startsWith("/reset-2fa");
-  const showMiniTwoFaReset = user?.twoFaRequired === true || onTwoFaRoute;
+  // WICHTIG: nicht nur Token! -> wenn user null ist, UI sofort “ausgeloggt”
+  const isLoggedIn = !!token && !!user?.username;
+
+  const roles = user?.roles ?? [];
+
+  const hasRole = (role) =>
+    Array.isArray(roles) &&
+    (roles.includes(role) || roles.includes(`ROLE_${role}`));
+
+ 
+
+  const handleLogout = async () => {
+    if (loggingOut) return; // verhindert 2-Klick-Problem
+    setLoggingOut(true);
+
+    try {
+      if (typeof logout === "function") {
+        logout(); // UserContext logout -> token weg + user null
+      } else {
+        
+
+        removeToken();
+        setUser?.(null);
+      }
+    } finally {
+      setLoggingOut(false);
+      setUser(null);
+      navigate("/login", {
+        replace: true,
+        state: {
+          flash: { type: "success", message: "Du wurdest ausgeloggt." },
+        },
+      });
+    }
+  };
+
+  useEffect(() => {
+    
+
+  }, [user]);
+
+ useEffect(() => {
+  const token = sessionStorage.getItem("token");
+
+  if (!token && user === null) {
+    console.warn("🚨 No token → redirect to login");
+    navigate("/login", { replace: true });
+  }
+}, [user]);
+
+ useEffect(() => {
+  
+}, [token, user, isLoggedIn]);
+
 
   return (
-  <nav className="topnav">
-    {/* 
-    <div className="left">
-      <Link to="/">🏠 Home</Link> 
-      <Link to="/courses">📚 Kurse</Link> 
+    <header className="navigation-header">
+      <nav className="navigation">
+        <div className="nav-left">
+          <Link to="/" className="nav-logo">
+            clavisimo
+          </Link>
 
-      <div className="left">
-        {isTrainer && <Link to="/trainer">🛠️ Trainerbereich</Link>}
-        {user?.roles?.includes("ADMIN") && (
-          <>
-            <Link to="/admin">🧭 Admin-Dashboard</Link>
-            <Link to="/admin/users">👥 Benutzer</Link>              
-          </>
-        )}
-      </div>
-    </div>
-    */}
+          <Link to="/" className="nav-link">
+            Home
+          </Link>
 
-    <div className="right">
-      {isLoggedIn ? (
-        <>
-          {/* <span style={{ marginRight: 12 }}>👤 {user.username}</span> */} 
-          {/* <Link to="/change-password">🔑 Passwort ändern</Link> */}
-          {showMiniTwoFaReset && (            
-            <Link to="/reset-2fa" style={{ marginLeft: 12 }}>
-              🔄 2FA zurücksetzen
-            </Link>
-          )}
-          {/* <LogoutButton /> */}
-        </>
-      ) : (
-        <>
+          <Link to="/courses" className="nav-link">
+            Kurse
+          </Link>
+
          
-        </>
-      )}
-    </div>
-  </nav>
-);
+          
+        </div>
 
+        <div className="nav-right">
+          {!isLoggedIn ? (
+            <>
+              <Link to="/login" className="nav-link">
+                Login
+              </Link>
+              <Link to="/register" className="nav-link">
+                Registrieren
+              </Link>
+            </>
+          ) : (
+            <>
+              <span className="nav-user">
+                {user?.username || user?.email}
+              </span>
+              <button
+                className="nav-logout-btn"
+                onClick={handleLogout}
+                disabled={loggingOut}
+                title={loggingOut ? "Logout..." : "Logout"}
+              >
+                {loggingOut ? "Logout..." : "Logout"}
+              </button>
+            </>
+          )}
+        </div>
+      </nav>
+    </header>
+  );
 }

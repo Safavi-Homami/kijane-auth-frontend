@@ -66,7 +66,7 @@
 
 /* Sticky Header */
 /* Sticky Header */
-.header {
+.app-header { 
   position: sticky;
   top: 0;
   z-index: 999;
@@ -163,4 +163,14 @@ background-color: #007bff;
   display: flex;
   align-items: center;
   gap: 8px; /* <– Abstand zwischen Icon und Text */
+}
+
+
+.page-background {
+  padding-top: 0 !important;
+  background: linear-gradient(to bottom, #f8fafc, #eef2f7) !important;
+}
+
+.page-background > .container {
+  padding-top: 0px;
 }

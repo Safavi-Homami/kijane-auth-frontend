@@ -18,7 +18,7 @@ export default function VerifyEmail() {
         navigate("/success");
       })
       .catch((err) => {
-        console.error("Fehler bei der Bestätigung:", err);
+        console.error("Fehler bei der Bestätigung!");
         alert("Aktivierungslink ungültig oder abgelaufen.");
       });
   }, [code, navigate]);
