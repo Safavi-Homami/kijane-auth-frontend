@@ -28,3 +28,7 @@ dist-ssr
 *.sln
 *.sw?
 Thumbs.db
+# Lokale Demo-/Dokumentationsdateien, nicht für Railway-Deployment
+public/Kursvorlage/
+public/blueprints/
+public/docs/
